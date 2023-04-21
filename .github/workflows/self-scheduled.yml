@@ -119,7 +119,6 @@ jobs:
           name: ${{ matrix.machine_type }}_run_tests_torch_cuda_extensions_gpu_test_reports
           path: /workspace/transformers/reports/${{ matrix.machine_type }}_tests_torch_cuda_extensions_gpu
 
-
   send_results:
     name: Send results to webhook
     runs-on: ubuntu-latest
