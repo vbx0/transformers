@@ -128,8 +128,6 @@ jobs:
       run_all_tests_torch_cuda_extensions_gpu,
     ]
     steps:
-      - name: Preliminary job status
-        shell: bash
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
       - name: Send message to Slack
@@ -159,3 +157,4 @@ jobs:
         with:
           name: test_failure_tables
           path: test_failure_tables
+
