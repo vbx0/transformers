@@ -24,13 +24,13 @@ jobs:
     uses: ./.github/workflows/self-nightly-scheduled.yml
     secrets: inherit
 
-  run_past_ci_pytorch_1-13:
-    name: PyTorch 1.13
-    if: (cancelled() != true) && ((github.event_name == 'schedule') || ((github.event_name == 'push') && startsWith(github.ref_name, 'run_use_nightly_accelerate_in_past_ci')))
-    needs: [run_nightly_ci]
-    uses: ./.github/workflows/self-past.yml
-    with:
-      framework: pytorch
-      version: "1.13"
-      sha: ${{ github.sha }}
-    secrets: inherit
+#  run_past_ci_pytorch_1-13:
+#    name: PyTorch 1.13
+#    if: (cancelled() != true) && ((github.event_name == 'schedule') || ((github.event_name == 'push') && startsWith(github.ref_name, 'run_use_nightly_accelerate_in_past_ci')))
+#    needs: [run_nightly_ci]
+#    uses: ./.github/workflows/self-past.yml
+#    with:
+#      framework: pytorch
+#      version: "1.13"
+#      sha: ${{ github.sha }}
+#    secrets: inherit
