@@ -46,7 +46,7 @@ from ...modeling_flax_utils import (
 from ...utils import ModelOutput, add_start_docstrings, add_start_docstrings_to_model_forward, logging
 from .configuration_big_bird import BigBirdConfig
 
-
+a = 1
 logger = logging.get_logger(__name__)
 
 _CHECKPOINT_FOR_DOC = "google/bigbird-roberta-base"
