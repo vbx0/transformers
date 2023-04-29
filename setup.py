@@ -423,9 +423,56 @@ install_requires = [
     deps["tqdm"],  # progress bars in model download and training scripts
 ]
 
+from setuptools import Command, find_packages, setup
+import os
+from typing import Dict, List
+
+
+with open("requirements.txt") as f:
+    install_requires = f.read().splitlines()
+
+with open("extras-requirements.txt") as f:
+    extras = {
+        line.split()[0]: line.split()[1:]
+        for line in f.read().splitlines()
+        if not line.startswith("#")
+    }
+
+
+class DepsTableUpdateCommand(Command):
+    """Command to update docs/deps_table.rst."""
+
+    description = "Update docs/deps_table.rst with the latest requirements."
+    user_options: List = []
+
+    def initialize_options(self) -> None:
+        pass
+
+    def finalize_options(self) -> None:
+        pass
+
+    def run(self) -> None:
+        with open(os.path.join(os.path.dirname(__file__), "docs", "deps_table.rst"), "w") as f:
+            f.write("Requirements\n------------\n\n")
+            for extras_name in ["all"] + list(extras.keys()):
+                requirements: List[str] = install_requires
+                if extras_name != "all":
+                    requirements += extras[extras_name]
+                f.write(f".. _deps-table-{extras_name}:\n\n")
+                f.write(f"{extras_name.capitalize()}\n{'=' * len(extras_name)}\n\n")
+                f.write(".. list-table::\n")
+                f.write("   :header-rows: 1\n\n")
+                f.write("   * - Package\n")
+                f.write("     - Version\n")
+                f.write("     - Required\n\n")
+                for package in sorted(set(requirements)):
+                    f.write(f"   * - {package}\n")
+                    f.write("     - \n")
+                    f.write(f"     - {'X' if package in requirements else ''}\n\n")
+
 setup(
     name="transformers",
-    version="4.29.0.dev0",  # expected format is one of x.y.z.dev0, or x.y.z.rc1 or x.y.z (no to dashes, yes to dots)
+    version="4.29.0.dev0",
     author="The Hugging Face team (past and future) with the help of all our contributors (https://github.com/huggingface/transformers/graphs/contributors)",
     author_email="transformers@huggingface.co",
     description="State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow",
